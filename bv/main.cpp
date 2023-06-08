@@ -56,11 +56,11 @@ int main(int argc, char* argv[])
 #endif
 
 #ifdef __linux__
-    localtime_r(&currentTime, &localTimeInfo);
+    localtime_r(&currentTime, &localTime);
 #endif
     // 格式化日期和时间
     std::stringstream ss;
     ss << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S");
-    std::cout << build_counter_l << "@" << ss.str();
+    std::cout << build_counter_l << "@" << ss.str() << std::endl;
     return 0;
 }
