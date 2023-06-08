@@ -51,7 +51,13 @@ int main(int argc, char* argv[])
 
     std::time_t currentTime = std::time(nullptr);
     std::tm localTime;
+#ifdef _WIN32
     localtime_s(&localTime, &currentTime);
+#endif
+
+#ifdef __linux__
+    localtime_r(&currentTime, &localTimeInfo);
+#endif
     // 格式化日期和时间
     std::stringstream ss;
     ss << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S");
