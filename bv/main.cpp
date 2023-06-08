@@ -14,6 +14,20 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    bool b_output = false;
+
+    // 遍历命令行参数
+    for (int i = 1; i < argc; i++)
+    {
+        std::string arg = argv[i];
+
+        // 检查是否存在 --out 参数
+        if (arg == "--out")
+        {
+            b_output = true;
+        }
+    }
+
     // 获取文件路径
     std::string filePath = argv[1];
     //    std::cout << "File path: " << filePath << std::endl;
@@ -33,21 +47,22 @@ int main(int argc, char* argv[])
     // 关闭文件
     file.close();
 
-    // 打开文件以写入内容
-    std::ofstream outputFile(filePath);
-    if (!outputFile.is_open())
-    {
-        //        std::cout << "Failed to open file for writing." << std::endl;
-        return 1;
-    }
-
-    // 写入新的内容到前两行
     long build_counter_l = std::stol(build_counter);
-    build_counter_l++;
-    outputFile << build_counter_l;
+    if(b_output){
+        // 打开文件以写入内容
+        std::ofstream outputFile(filePath);
+        if (!outputFile.is_open())
+        {
+            //        std::cout << "Failed to open file for writing." << std::endl;
+            return 1;
+        }
 
-    // 关闭输出文件
-    outputFile.close();
+        build_counter_l++;
+        outputFile << build_counter_l;
+
+        // 关闭输出文件
+        outputFile.close();
+    }
 
     std::time_t currentTime = std::time(nullptr);
     std::tm localTime;
